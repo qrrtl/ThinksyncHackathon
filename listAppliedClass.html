@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost - Applied Classes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+    <header class="fixed top-0 w-full bg-gray-900 bg-opacity-90 backdrop-blur-md z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">
+                <a href="index.html" class="hover:text-sky-500 transition-colors">BrainBoost</a>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-gray-400 font-medium">
+                <a href="features.html" class="hover:text-sky-500 transition-colors nav-link">Features</a>
+                <a href="tutorPage.html" class="hover:text-sky-500 transition-colors nav-link">Tutors</a>
+                <a href="listAppliedClass.html" class="hover:text-sky-500 transition-colors nav-link">Request Class</a>
+                <a href="#feedback-section" class="hover:text-sky-500 transition-colors nav-link">Tutor Feedback</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pt-32 pb-20 px-6">
+        <section class="container mx-auto max-w-4xl mb-8">
+            <h1 class="text-3xl font-extrabold text-white mb-6">Applied Booking Classes</h1>
+            <div id="applied-classes-list" class="space-y-6"></div>
+            <div id="empty-message" class="text-gray-400 text-center py-8 hidden">No applied classes yet.</div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-950 text-white py-12 px-6 mt-16">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">BrainBoost</h3>
+                <p class="text-gray-400">Your last-minute academic lifebuoy</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="features.html" class="hover:text-sky-400 transition-colors">Features</a></li>
+                    <li><a href="tutorPage.html" class="hover:text-sky-400 transition-colors">Tutors</a></li>
+                    <li><a href="pricing.html" class="hover:text-sky-400 transition-colors">Pricing</a></li>
+                    <li><a href="merit.html" class="hover:text-sky-400 transition-colors">Merit</a></li>
+                    <li><a href="notes.html" class="hover:text-sky-400 transition-colors">Notes</a></li>
+                    <li><a href="feedback.html" class="hover:text-sky-400 transition-colors">Tutor Feedback</a></li>
+                    <li><a href="testimonials.html" class="hover:text-sky-400 transition-colors">Testimonials</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="#" class="hover:text-sky-400 transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-sky-400 transition-colors">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li>Email: info@brainboost.com</li>
+                    <li>Phone: +1 (123) 456-7890</li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 mt-8">
+            © 2024 BrainBoost. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        function renderAppliedClasses() {
+            const appliedClasses = JSON.parse(localStorage.getItem('appliedTutorClasses') || '[]');
+            const container = document.getElementById('applied-classes-list');
+            const emptyMsg = document.getElementById('empty-message');
+            if (appliedClasses.length === 0) {
+                container.innerHTML = '';
+                emptyMsg.classList.remove('hidden');
+            } else {
+                emptyMsg.classList.add('hidden');
+                container.innerHTML = appliedClasses.map(cls => `
+                    <div class="bg-white rounded-2xl shadow-lg p-6 mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <div class="text-lg font-bold text-blue-900">Commission <span class="text-blue-700">${cls.commission}</span></div>
+                            <span class="bg-black text-white px-4 py-1 rounded-full text-xs font-semibold">${cls.type}</span>
+                        </div>
+                        <div class="flex gap-6 mb-2">
+                            <div>
+                                <div class="text-xs font-semibold text-gray-700">Subject</div>
+                                <div class="text-sm text-gray-900">${cls.subject}</div>
+                            </div>
+                            <div>
+                                <div class="text-xs font-semibold text-gray-700">Location</div>
+                                <div class="text-sm text-gray-900">${cls.location}</div>
+                            </div>
+                            <div>
+                                <div class="text-xs font-semibold text-gray-700">Level</div>
+                                <div class="text-sm text-gray-900">${cls.level}</div>
+                            </div>
+                        </div>
+                        <div class="text-gray-700 text-sm mb-1">Date: <span class="font-semibold">${cls.date}</span> | Time: <span class="font-semibold">${cls.time}</span></div>
+                        <div class="text-green-600 font-semibold">${cls.status}</div>
+                    </div>
+                `).join('');
+            }
+        }
+        renderAppliedClasses();
+    </script>
+</body>
+</html>

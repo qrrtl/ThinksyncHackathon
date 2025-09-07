@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutor Profile - BrainBoost</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+    <header class="fixed top-0 w-full bg-gray-900 bg-opacity-90 backdrop-blur-md z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">
+                <a href="index.html" class="hover:text-sky-500 transition-colors">BrainBoost</a>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-gray-400 font-medium">
+                <a href="features.html" class="hover:text-sky-500 transition-colors nav-link">Features</a>
+                <a href="tutors.html" class="hover:text-sky-500 transition-colors nav-link">Tutors</a>
+                <a href="pricing.html" class="hover:text-sky-500 transition-colors nav-link">Pricing</a>
+                <a href="merit.html" class="hover:text-sky-500 transition-colors nav-link">Merit</a>
+                <a href="notes.html" class="hover:text-sky-500 transition-colors nav-link">Notes</a>
+                <a href="feedback.html" class="hover:text-sky-500 transition-colors nav-link">Tutor Feedback</a>
+                <a href="testimonials.html" class="hover:text-sky-500 transition-colors nav-link">Testimonials</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div id="merit-points-container" class="flex items-center space-x-1 px-3 py-1 bg-gray-800 rounded-full text-yellow-300 font-semibold shadow-inner transition-transform hidden">
+                    <svg class="w-5 h-5 text-yellow-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="8" r="6"></circle>
+                        <path d="M18 6v14a2 2 0 0 1-2 2H4"></path>
+                        <path d="M3 14h6"></path>
+                        <path d="M16 12a2 2 0 1 0-4 0 2 2 0 0 0 4 0z"></path>
+                        <path d="M14 12v6"></path>
+                        <path d="M14 18h6"></path>
+                        <path d="M22 18h-6"></path>
+                    </svg>
+                    <span id="merit-points">0 Merit</span>
+                </div>
+                <button id="sign-out-btn" class="px-4 py-2 rounded-full text-gray-200 font-medium hover:bg-gray-800 transition-colors hidden">Sign Out</button>
+                <a href="SignIn.html" id="sign-in-btn" class="px-4 py-2 rounded-full text-white font-bold bg-gray-700 hover:bg-gray-600 transition-all transform hover:-translate-y-1 shadow-lg">Sign In</a>
+                <a href="SignIn.html" id="get-started-btn" class="px-5 py-2 rounded-full text-white font-medium bg-sky-500 hover:bg-sky-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-20 px-6 bg-gray-900 min-h-screen flex flex-col items-center justify-center">
+        <div id="profile-container" class="bg-gray-800 p-8 rounded-3xl shadow-2xl border border-gray-700 max-w-4xl w-full mx-auto flex flex-col md:flex-row items-center md:items-start text-center md:text-left space-y-6 md:space-y-0 md:space-x-12 transform transition-all duration-300">
+            <div id="profile-details-container" class="flex flex-col items-center md:items-start w-full md:w-1/3 p-4">
+                <img id="tutor-image" src="" alt="Tutor Profile" class="w-48 h-48 rounded-full mb-8 object-cover border-4 border-gray-900 shadow-lg" />
+                
+                <h1 id="tutor-name" class="text-4xl font-extrabold text-white mb-3"></h1>
+                <p id="tutor-subject" class="text-2xl text-sky-500 font-medium mb-5"></p>
+                <div class="flex items-center space-x-2 text-yellow-300 mb-8">
+                    <svg class="w-7 h-7 fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <span id="tutor-rating" class="text-white font-bold text-xl"></span>
+                </div>
+
+                <div class="mt-8 w-full flex flex-col items-center md:items-start space-y-4">
+                    <a id="book-session-btn" href="#" class="inline-block px-10 py-4 rounded-full text-white font-bold bg-purple-600 hover:bg-purple-700 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1 text-lg">
+                        Book a Session
+                    </a>
+                    <div id="session-booked-container" class="hidden w-full flex flex-col items-center md:items-start space-y-4">
+                        <div class="px-10 py-4 rounded-full text-white font-bold bg-green-600 text-center shadow-xl w-full text-lg">
+                            Session Booked!
+                        </div>
+                        <a id="cancel-booking-btn" href="#" class="px-10 py-4 rounded-full text-white font-bold bg-red-600 hover:bg-red-700 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1 w-full text-center text-lg">
+                            Cancel Booking
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="w-full md:w-2/3 space-y-4 text-gray-300 text-lg">
+                <p id="tutor-bio"></p>
+                <p><span class="font-semibold text-white">Expertise:</span> <span id="tutor-expertise"></span></p>
+            </div>
+        </div>
+
+        <section id="feedback-section" class="w-full max-w-4xl mt-12">
+            <h2 class="text-3xl font-bold text-white text-center mb-6">Student Feedback</h2>
+            <div id="feedback-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-950 text-white py-12 px-6">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">BrainBoost</h3>
+                <p class="text-gray-400">Your last-minute academic lifebuoy</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="features.html" class="hover:text-sky-400 transition-colors">Features</a></li>
+                    <li><a href="tutors.html" class="hover:text-sky-400 transition-colors">Tutors</a></li>
+                    <li><a href="pricing.html" class="hover:text-sky-400 transition-colors">Pricing</a></li>
+                    <li><a href="merit.html" class="hover:text-sky-400 transition-colors">Merit</a></li>
+                    <li><a href="notes.html" class="hover:text-sky-400 transition-colors">Notes</a></li>
+                    <li><a href="feedback.html" class="hover:text-sky-500 transition-colors nav-link">Tutor Feedback</a></li>
+                    <li><a href="testimonials.html" class="hover:text-sky-500 transition-colors nav-link">Testimonials</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="#" class="hover:text-sky-400 transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-sky-400 transition-colors">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li>Email: info@brainboost.com</li>
+                    <li>Phone: +1 (123) 456-7890</li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 mt-8">
+            © 2025 BrainBoost. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const tutorName = params.get('tutor');
+            const profileContainer = document.getElementById('profile-container');
+            const tutorImage = document.getElementById('tutor-image');
+            const tutorNameEl = document.getElementById('tutor-name');
+            const tutorSubjectEl = document.getElementById('tutor-subject');
+            const tutorRatingEl = document.getElementById('tutor-rating');
+            const tutorBioEl = document.getElementById('tutor-bio');
+            const tutorExpertiseEl = document.getElementById('tutor-expertise');
+            const feedbackContainer = document.getElementById('feedback-container');
+
+            const tutorsData = {
+                'Dr. Anya Sharma': {
+                    img: 'https://placehold.co/128x128/374151/d1d5db?text=Anya',
+                    subject: 'Math & Physics',
+                    rating: '5.0',
+                    bio: 'Dr. Anya Sharma is a highly experienced tutor with a Ph.D. in Theoretical Physics. She specializes in making complex concepts easy to understand, helping students build a strong foundation in science and mathematics. Her personalized approach ensures every student gets the attention they need to succeed.',
+                    expertise: 'Calculus, Quantum Mechanics, Algebra, Mechanics, and Test Prep.',
+                    feedback: [
+                        { stars: 5, comment: 'Dr. Sharma is a game-changer! The sessions are incredibly knowledgeable and she explains things so clearly. My grades have improved dramatically.', student: 'Emily R.' },
+                        { stars: 5, comment: 'I love her teaching style. She makes even the hardest topics seem simple. Quantum mechanics was a breeze with her help!', student: 'James K.' }
+                    ]
+                },
+                'Mr. Ben Carter': {
+                    img: 'https://placehold.co/128x128/374151/d1d5db?text=Ben',
+                    subject: 'Mathematics',
+                    rating: '4.9',
+                    bio: 'Mr. Ben Carter has over 10 years of experience teaching mathematics at the high school and university levels. He is known for his patient and engaging teaching style, and he is passionate about helping students overcome their fear of math.',
+                    expertise: 'Statistics, Geometry, Trigonometry, and Financial Mathematics.',
+                    feedback: [
+                        { stars: 5, comment: 'Ben is an amazing math tutor. He helped me prepare for my finals and I passed with flying colors!', student: 'Sarah L.' },
+                        { stars: 4, comment: 'Very patient and great at explaining complex problems. Highly recommend!', student: 'Michael T.' }
+                    ]
+                },
+                'Ms. Chloe Davis': {
+                    img: 'https://placehold.co/128x128/374151/d1d5db?text=Chloe',
+                    subject: 'English Literature',
+                    rating: '4.8',
+                    bio: 'Ms. Chloe Davis is a literary expert with a passion for classic and modern literature. She helps students develop critical reading skills, improve their essay writing, and find joy in exploring different narratives and authors.',
+                    expertise: 'Literary Analysis, Essay Writing, Shakespearean Studies, and Creative Writing.',
+                    feedback: [
+                        { stars: 5, comment: 'Chloe helped me with my college application essays. Her feedback was invaluable!', student: 'Alex P.' }
+                    ]
+                },
+                'Mr. David Lee': {
+                    img: 'https://placehold.co/128x128/374151/d1d5db?text=David',
+                    subject: 'Computer Science',
+                    rating: '5.0',
+                    bio: 'Mr. David Lee is a software engineer with extensive experience in both academia and the tech industry. He provides hands-on coding support and helps students prepare for technical interviews. He is available 24/7 for quick questions and debugging help.',
+                    expertise: 'Python, Java, Data Structures & Algorithms, Web Development, and AI/ML.',
+                    feedback: []
+                }
+            };
+            
+            const tutor = tutorsData[tutorName];
+
+            if (tutor) {
+                tutorImage.src = tutor.img;
+                tutorNameEl.textContent = tutorName;
+                tutorSubjectEl.textContent = tutor.subject;
+                tutorRatingEl.textContent = tutor.rating;
+                tutorBioEl.textContent = tutor.bio;
+                tutorExpertiseEl.textContent = tutor.expertise;
+                loadAndDisplayFeedback();
+            } else {
+                profileContainer.innerHTML = '<div class="text-center text-red-400 text-2xl font-semibold p-8">Tutor not found. Please go back to the <a href="tutors.html" class="text-sky-400 hover:underline">tutors page</a>.</div>';
+            }
+
+            function loadAndDisplayFeedback() {
+                const feedbackData = JSON.parse(localStorage.getItem('tutorFeedback')) || [];
+                const specificTutorFeedback = feedbackData.filter(item => item.tutor === tutorName);
+                
+                const combinedFeedback = [...tutor.feedback, ...specificTutorFeedback];
+
+                feedbackContainer.innerHTML = '';
+                if (combinedFeedback.length === 0) {
+                    feedbackContainer.innerHTML = '<p class="text-center text-gray-400">No feedback yet. Be the first to leave a review!</p>';
+                    return;
+                }
+
+                combinedFeedback.forEach(feedback => {
+                    const feedbackCard = document.createElement('div');
+                    feedbackCard.className = 'bg-gray-800 p-6 rounded-2xl shadow-lg border border-gray-700 space-y-4';
+                    feedbackCard.innerHTML = `
+                        <div class="flex items-center space-x-1 text-yellow-300">
+                            ${'<svg class="w-5 h-5 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>'.repeat(feedback.stars)}
+                        </div>
+                        <p class="text-gray-300 italic">"${feedback.comment}"</p>
+                        <p class="text-right text-gray-400">- ${feedback.student}</p>
+                    `;
+                    feedbackContainer.appendChild(feedbackCard);
+                });
+            }
+
+            const bookSessionBtn = document.getElementById('book-session-btn');
+            const sessionBookedContainer = document.getElementById('session-booked-container');
+            const cancelBookingBtn = document.getElementById('cancel-booking-btn');
+            
+            bookSessionBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                bookSessionBtn.classList.add('hidden');
+                sessionBookedContainer.classList.remove('hidden');
+                localStorage.setItem('bookedTutor', tutorName);
+            });
+
+            cancelBookingBtn.addEventListener('click', (event) => {
+                event.preventDefault();
+                sessionBookedContainer.classList.add('hidden');
+                bookSessionBtn.classList.remove('hidden');
+                localStorage.removeItem('bookedTutor');
+            });
+
+            const bookedTutor = localStorage.getItem('bookedTutor');
+            if (bookedTutor === tutorName) {
+                bookSessionBtn.classList.add('hidden');
+                sessionBookedContainer.classList.remove('hidden');
+            }
+
+            // Header Elements
+            const signInBtn = document.getElementById('sign-in-btn');
+            const getStartedBtn = document.getElementById('get-started-btn');
+            const signOutBtn = document.getElementById('sign-out-btn');
+            const meritPointsContainer = document.getElementById('merit-points-container');
+            const meritPointsEl = document.getElementById('merit-points');
+
+            // Function to update UI based on login status
+            const updateAuthUI = (loggedIn) => {
+                if (loggedIn) {
+                    signInBtn.classList.add('hidden');
+                    getStartedBtn.classList.add('hidden');
+                    signOutBtn.classList.remove('hidden');
+                    meritPointsContainer.classList.remove('hidden');
+                } else {
+                    signInBtn.classList.remove('hidden');
+                    getStartedBtn.classList.remove('hidden');
+                    signOutBtn.classList.add('hidden');
+                    meritPointsContainer.classList.add('hidden');
+                }
+            };
+
+            // Function to update merit points display
+            const updateMeritPoints = () => {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (currentUser && currentUser.meritPoints !== undefined) {
+                    meritPointsEl.textContent = `${currentUser.meritPoints} Merit`;
+                }
+            };
+
+            // Event listener for the Sign Out button
+            signOutBtn.addEventListener('click', () => {
+                localStorage.removeItem('loggedIn');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('userEmail');
+                updateAuthUI(false);
+                updateMeritPoints(); // Update display to 0 or default
+                window.location.href = 'index.html'; // Redirect to home page or stay
+            });
+
+            // Initial check on page load
+            const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
+            updateAuthUI(isLoggedIn);
+            updateMeritPoints();
+        });
+    </script>
+</body>
+</html>

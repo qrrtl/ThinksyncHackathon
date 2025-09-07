@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost - Feedback</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+    <header class="fixed top-0 w-full bg-gray-900 bg-opacity-90 backdrop-blur-md z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">
+                <a href="index.html" class="hover:text-sky-500 transition-colors">BrainBoost</a>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-gray-400 font-medium">
+                <a href="features.html" class="hover:text-sky-500 transition-colors nav-link">Features</a>
+                <a href="tutors.html" class="hover:text-sky-500 transition-colors nav-link">Tutors</a>
+                <a href="pricing.html" class="hover:text-sky-500 transition-colors nav-link">Pricing</a>
+                <a href="merit.html" class="hover:text-sky-500 transition-colors nav-link">Merit</a>
+                <a href="notes.html" class="hover:text-sky-500 transition-colors nav-link">Notes</a>
+                <a href="feedback.html" class="hover:text-sky-500 transition-colors nav-link">Tutor Feedback</a>
+                <a href="testimonials.html" class="hover:text-sky-500 transition-colors nav-link">Testimonials</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div id="merit-points-container" class="flex items-center space-x-1 px-3 py-1 bg-gray-800 rounded-full text-yellow-300 font-semibold shadow-inner transition-transform hidden">
+                    <svg class="w-5 h-5 text-yellow-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="8" r="6"></circle>
+                        <path d="M18 6v14a2 2 0 0 1-2 2H4"></path>
+                        <path d="M3 14h6"></path>
+                        <path d="M16 12a2 2 0 1 0-4 0 2 2 0 0 0 4 0z"></path>
+                        <path d="M14 12v6"></path>
+                        <path d="M14 18h6"></path>
+                        <path d="M22 18h-6"></path>
+                    </svg>
+                    <span id="merit-points">0 Merit</span>
+                </div>
+                <button id="sign-out-btn" class="px-4 py-2 rounded-full text-gray-200 font-medium hover:bg-gray-800 transition-colors hidden">Sign Out</button>
+                <a href="SignIn.html" id="sign-in-btn" class="px-4 py-2 rounded-full text-white font-bold bg-gray-700 hover:bg-gray-600 transition-all transform hover:-translate-y-1 shadow-lg">Sign In</a>
+                <a href="SignIn.html" id="get-started-btn" class="px-5 py-2 rounded-full text-white font-medium bg-sky-500 hover:bg-sky-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-20 px-6 bg-gray-900 min-h-screen flex items-center justify-center">
+        <div class="container mx-auto max-w-2xl text-center">
+            <h2 class="text-4xl font-bold text-white mb-4">Provide Tutor Feedback</h2>
+            <p class="text-lg text-gray-400 mb-8">Your feedback helps us improve our tutoring services.</p>
+
+            <div id="login-prompt" class="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 space-y-4 hidden">
+                <p class="text-xl font-semibold text-gray-300">You must be logged in to leave feedback.</p>
+                <a href="SignIn.html" class="inline-block px-6 py-3 rounded-full text-white font-bold bg-sky-500 hover:bg-sky-600 transition-all transform hover:-translate-y-1 shadow-lg">Sign In Now</a>
+            </div>
+
+            <form id="feedback-form" class="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 space-y-6 hidden">
+                <div id="feedback-message" class="bg-green-800 text-green-200 px-4 py-3 rounded-lg text-center hidden"></div>
+                <div>
+                    <label for="student-name" class="block text-gray-200 font-medium mb-2 text-left">Your Name</label>
+                    <input type="text" id="student-name" class="w-full px-4 py-3 rounded-lg border border-gray-700 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="e.g., Jane Doe" required />
+                </div>
+                <div>
+                    <label for="tutor-select" class="block text-gray-200 font-medium mb-2 text-left">Select Tutor</label>
+                    <select id="tutor-select" class="w-full px-4 py-3 rounded-lg border border-gray-700 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                        <option value="">-- Choose a Tutor --</option>
+                        <option value="Dr. Anya Sharma">Dr. Anya Sharma</option>
+                        <option value="Mr. Ben Carter">Mr. Ben Carter</option>
+                        <option value="Ms. Chloe Davis">Ms. Chloe Davis</option>
+                        <option value="Mr. David Lee">Mr. David Lee</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="rating" class="block text-gray-200 font-medium mb-2 text-left">Rate Your Tutor</label>
+                    <div id="rating-container" class="flex justify-center space-x-2">
+                    </div>
+                    <input type="hidden" id="rating-input" name="rating" value="0">
+                </div>
+                <div>
+                    <label for="feedback-text" class="block text-gray-200 font-medium mb-2 text-left">Your Feedback</label>
+                    <textarea id="feedback-text" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-700 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="Share your experience with this tutor..."></textarea>
+                </div>
+                <button type="submit" class="w-full px-6 py-3 rounded-full text-white font-bold bg-sky-500 hover:bg-sky-600 transition-all transform hover:-translate-y-1 shadow-lg">
+                    Submit Feedback
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <footer class="bg-gray-950 text-white py-12 px-6">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">BrainBoost</h3>
+                <p class="text-gray-400">Your last-minute academic lifebuoy</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="features.html" class="hover:text-sky-400 transition-colors">Features</a></li>
+                    <li><a href="tutors.html" class="hover:text-sky-400 transition-colors">Tutors</a></li>
+                    <li><a href="pricing.html" class="hover:text-sky-400 transition-colors">Pricing</a></li>
+                    <li><a href="merit.html" class="hover:text-sky-400 transition-colors">Merit</a></li>
+                    <li><a href="notes.html" class="hover:text-sky-400 transition-colors">Notes</a></li>
+                    <li><a href="feedback.html" class="hover:text-sky-500 transition-colors nav-link">Tutor Feedback</a></li>
+                    <li><a href="testimonials.html" class="hover:text-sky-500 transition-colors nav-link">Testimonials</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="#" class="hover:text-sky-400 transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-sky-400 transition-colors">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li>Email: info@brainboost.com</li>
+                    <li>Phone: +1 (123) 456-7890</li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 mt-8">
+            © 2025 BrainBoost. All rights reserved.
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Header elements
+            const signInBtn = document.getElementById('sign-in-btn');
+            const getStartedBtn = document.getElementById('get-started-btn');
+            const signOutBtn = document.getElementById('sign-out-btn');
+            const meritPointsContainer = document.getElementById('merit-points-container');
+            const meritPointsEl = document.getElementById('merit-points');
+
+            // Feedback form elements
+            const form = document.getElementById('feedback-form');
+            const tutorSelect = document.getElementById('tutor-select');
+            const ratingContainer = document.getElementById('rating-container');
+            const ratingInput = document.getElementById('rating-input');
+            const feedbackMessage = document.getElementById('feedback-message');
+            const studentNameInput = document.getElementById('student-name');
+            const loginPrompt = document.getElementById('login-prompt');
+
+            // Function to update UI based on login status
+            const updateAuthUI = (loggedIn) => {
+                if (loggedIn) {
+                    signInBtn.classList.add('hidden');
+                    getStartedBtn.classList.add('hidden');
+                    signOutBtn.classList.remove('hidden');
+                    meritPointsContainer.classList.remove('hidden');
+                } else {
+                    signInBtn.classList.remove('hidden');
+                    getStartedBtn.classList.remove('hidden');
+                    signOutBtn.classList.add('hidden');
+                    meritPointsContainer.classList.add('hidden');
+                }
+            };
+
+            // Function to update merit points display
+            const updateMeritPoints = () => {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (currentUser && currentUser.meritPoints !== undefined) {
+                    meritPointsEl.textContent = `${currentUser.meritPoints} Merit`;
+                }
+            };
+
+            // Event listener for the Sign Out button
+            signOutBtn.addEventListener('click', () => {
+                localStorage.removeItem('loggedIn');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('userEmail');
+                updateAuthUI(false);
+                updateMeritPoints(); // Update display to 0 or default
+                window.location.href = 'index.html'; // Redirect to home page or stay
+            });
+
+            // Initial check on page load
+            const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
+            updateAuthUI(isLoggedIn);
+            updateMeritPoints();
+
+            // Function to handle showing/hiding the form
+            const handleFormDisplay = () => {
+                if (isLoggedIn) {
+                    form.classList.remove('hidden');
+                    loginPrompt.classList.add('hidden');
+                } else {
+                    form.classList.add('hidden');
+                    loginPrompt.classList.remove('hidden');
+                }
+            };
+
+            handleFormDisplay(); // Initial call to set form visibility
+
+            // Generate star rating icons only if logged in
+            if (isLoggedIn) {
+                for (let i = 1; i <= 5; i++) {
+                    const star = document.createElement('span');
+                    star.innerHTML = `<svg class="w-8 h-8 cursor-pointer fill-current text-gray-500 hover:text-yellow-400 transition-colors" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>`;
+                    star.dataset.rating = i;
+                    ratingContainer.appendChild(star);
+                }
+            }
+
+            // Handle rating clicks
+            ratingContainer.addEventListener('click', (event) => {
+                const clickedStar = event.target.closest('span');
+                if (clickedStar) {
+                    const rating = clickedStar.dataset.rating;
+                    ratingInput.value = rating;
+                    
+                    // Update star colors
+                    Array.from(ratingContainer.children).forEach(star => {
+                        const starSvg = star.querySelector('svg');
+                        if (parseInt(star.dataset.rating) <= rating) {
+                            starSvg.classList.remove('text-gray-500');
+                            starSvg.classList.add('text-yellow-400');
+                        } else {
+                            starSvg.classList.remove('text-yellow-400');
+                            starSvg.classList.add('text-gray-500');
+                        }
+                    });
+                }
+            });
+
+            // Handle form submission
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const studentName = studentNameInput.value;
+                const tutor = tutorSelect.value;
+                const rating = ratingInput.value;
+                const feedbackText = document.getElementById('feedback-text').value;
+
+                if (!studentName || !tutor || rating === '0' || !feedbackText) {
+                    feedbackMessage.textContent = 'Please fill out all fields.';
+                    feedbackMessage.classList.remove('bg-green-800', 'hidden');
+                    feedbackMessage.classList.add('bg-red-800');
+                    return;
+                }
+
+                // Call the function to save feedback
+                saveFeedback(studentName, tutor, rating, feedbackText);
+
+                // Display success message
+                feedbackMessage.textContent = 'Thank you for your feedback! Your review has been submitted.';
+                feedbackMessage.classList.remove('bg-red-800', 'hidden');
+                feedbackMessage.classList.add('bg-green-800');
+
+                // Reset form fields
+                form.reset();
+                ratingInput.value = '0';
+                Array.from(ratingContainer.children).forEach(star => {
+                    const starSvg = star.querySelector('svg');
+                    starSvg.classList.remove('text-yellow-400');
+                    starSvg.classList.add('text-gray-500');
+                });
+            });
+
+            function saveFeedback(student, tutor, rating, comment) {
+                const feedbackData = JSON.parse(localStorage.getItem('tutorFeedback')) || [];
+                feedbackData.push({
+                    tutor: tutor,
+                    stars: parseInt(rating),
+                    comment: comment,
+                    student: student
+                });
+                localStorage.setItem('tutorFeedback', JSON.stringify(feedbackData));
+            }
+        });
+    </script>
+</body>
+</html>

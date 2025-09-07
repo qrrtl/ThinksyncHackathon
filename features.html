@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost - Features</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+    <header class="fixed top-0 w-full bg-gray-900 bg-opacity-90 backdrop-blur-md z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">
+                <a href="index.html" class="hover:text-sky-500 transition-colors">BrainBoost</a>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-gray-400 font-medium">
+                <a href="features.html" class="hover:text-sky-500 transition-colors nav-link">Features</a>
+                <a href="tutors.html" class="hover:text-sky-500 transition-colors nav-link">Tutors</a>
+                <a href="pricing.html" class="hover:text-sky-500 transition-colors nav-link">Pricing</a>
+                <a href="merit.html" class="hover:text-sky-500 transition-colors nav-link">Merit</a>
+                <a href="notes.html" class="hover:text-sky-500 transition-colors nav-link">Notes</a>
+                <a href="feedback.html" class="hover:text-sky-500 transition-colors nav-link">TutoFeedback</a>
+                <a href="testimonials.html" class="hover:text-sky-500 transition-colors nav-link">Testimonials</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div id="merit-points-container" class="flex items-center space-x-1 px-3 py-1 bg-gray-800 rounded-full text-yellow-300 font-semibold shadow-inner transition-transform hidden">
+                    <svg class="w-5 h-5 text-yellow-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="8" r="6"></circle>
+                        <path d="M18 6v14a2 2 0 0 1-2 2H4"></path>
+                        <path d="M3 14h6"></path>
+                        <path d="M16 12a2 2 0 1 0-4 0 2 2 0 0 0 4 0z"></path>
+                        <path d="M14 12v6"></path>
+                        <path d="M14 18h6"></path>
+                        <path d="M22 18h-6"></path>
+                    </svg>
+                    <span id="merit-points">0 Merit</span>
+                </div>
+                <button id="sign-out-btn" class="px-4 py-2 rounded-full text-gray-200 font-medium hover:bg-gray-800 transition-colors hidden">Sign Out</button>
+                <a href="SignIn.html" id="sign-in-btn" class="px-4 py-2 rounded-full text-white font-bold bg-gray-700 hover:bg-gray-600 transition-all transform hover:-translate-y-1 shadow-lg">Sign In</a>
+                <a href="SignIn.html" id="get-started-btn" class="px-5 py-2 rounded-full text-white font-medium bg-sky-500 hover:bg-sky-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="features" class="py-20 bg-gray-900 px-6">
+            <div class="container mx-auto text-center animate-slide-in-up">
+                <h2 class="text-4xl font-bold text-white mb-12">How It Works</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 flex flex-col items-center text-center transition-transform hover:scale-105 hover:shadow-xl">
+                        <svg class="w-12 h-12 text-sky-500 mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="8.5" cy="7" r="4"></circle>
+                            <path d="M17 11l2 2l4-4"></path>
+                        </svg>
+                        <h3 class="text-2xl font-semibold text-white mb-2">Qualified Tutors</h3>
+                        <p class="text-gray-400">Every tutor is vetted for expertise and teaching ability, ensuring you get the best academic help.</p>
+                    </div>
+                    <div class="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 flex flex-col items-center text-center transition-transform hover:scale-105 hover:shadow-xl">
+                        <svg class="w-12 h-12 text-sky-500 mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M7.9 20A9 9 0 0 1 4 16.1L2 22l6-2z"></path>
+                            <path d="M15 20a9 9 0 0 0 5-8c0-4.9-4-9-9-9s-9 4.1-9 9"></path>
+                            <path d="M8 12h.01"></path>
+                            <path d="M12 12h.01"></path>
+                            <path d="M16 12h.01"></path>
+                        </svg>
+                        <h3 class="text-2xl font-semibold text-white mb-2">Interactive Learning</h3>
+                        <p class="text-gray-400">Engage with live whiteboards, text editors, and video chat for a dynamic learning experience.</p>
+                    </div>
+                    <div class="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 flex flex-col items-center text-center transition-transform hover:scale-105 hover:shadow-xl">
+                        <svg class="w-12 h-12 text-sky-500 mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                        <h3 class="text-2xl font-semibold text-white mb-2">Curated Resources</h3>
+                        <p class="text-gray-400">Access a library of study guides, practice problems, and video tutorials tailored to your needs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-950 text-white py-12 px-6">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">BrainBoost</h3>
+                <p class="text-gray-400">Your last-minute academic lifebuoy</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="features.html" class="hover:text-sky-400 transition-colors">Features</a></li>
+                    <li><a href="tutors.html" class="hover:text-sky-400 transition-colors">Tutors</a></li>
+                    <li><a href="pricing.html" class="hover:text-sky-400 transition-colors">Pricing</a></li>
+                    <li><a href="merit.html" class="hover:text-sky-400 transition-colors">Merit</a></li>
+                    <li><a href="notes.html" class="hover:text-sky-400 transition-colors">Notes</a></li>
+                    <a href="feedback.html" class="hover:text-sky-500 transition-colors nav-link">TutoFeedback</a>
+                    <li><a href="testimonials.html" class="hover:text-sky-500 transition-colors nav-link">Testimonials</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="#" class="hover:text-sky-400 transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-sky-400 transition-colors">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li>Email: info@brainboost.com</li>
+                    <li>Phone: +1 (123) 456-7890</li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 mt-8">
+            © 2024 BrainBoost. All rights reserved.
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- UI Elements ---
+            const signInBtn = document.getElementById('sign-in-btn');
+            const getStartedBtn = document.getElementById('get-started-btn');
+            const signOutBtn = document.getElementById('sign-out-btn');
+            const meritPointsContainer = document.getElementById('merit-points-container');
+            const meritPointsEl = document.getElementById('merit-points');
+
+            // Function to update UI based on login status
+            const updateAuthUI = (loggedIn) => {
+                if (loggedIn) {
+                    signInBtn.classList.add('hidden');
+                    getStartedBtn.classList.add('hidden');
+                    signOutBtn.classList.remove('hidden');
+                    meritPointsContainer.classList.remove('hidden');
+                } else {
+                    signInBtn.classList.remove('hidden');
+                    getStartedBtn.classList.remove('hidden');
+                    signOutBtn.classList.add('hidden');
+                    meritPointsContainer.classList.add('hidden');
+                }
+            };
+
+            // Check user status on page load
+            const checkAuthStatus = () => {
+                const loggedIn = localStorage.getItem('loggedIn') === 'true';
+                updateAuthUI(loggedIn);
+                if (loggedIn) {
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    if (currentUser) {
+                        const users = JSON.parse(localStorage.getItem('users')) || [];
+                        const user = users.find(u => u.email === currentUser.email);
+                        if (user && user.meritPoints !== undefined) {
+                            meritPointsEl.textContent = `${user.meritPoints} Merit`;
+                        } else {
+                            meritPointsEl.textContent = '0 Merit';
+                        }
+                    }
+                }
+            };
+
+            // Event listener for the Sign Out button
+            signOutBtn.addEventListener('click', () => {
+                localStorage.removeItem('loggedIn');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('userEmail'); // A good practice to clear this if it exists
+                updateAuthUI(false);
+                meritPointsEl.textContent = '0 Merit';
+                window.location.href = 'index.html';
+            });
+
+            // Initial call to check user status when the page loads
+            checkAuthStatus();
+        });
+    </script>
+</body>
+</html>

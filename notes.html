@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost - Notes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+    <header class="fixed top-0 w-full bg-gray-900 bg-opacity-90 backdrop-blur-md z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">
+                <a href="index.html" class="hover:text-sky-500 transition-colors">BrainBoost</a>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-gray-400 font-medium">
+                <a href="features.html" class="hover:text-sky-500 transition-colors nav-link">Features</a>
+                <a href="tutors.html" class="hover:text-sky-500 transition-colors nav-link">Tutors</a>
+                <a href="pricing.html" class="hover:text-sky-500 transition-colors nav-link">Pricing</a>
+                <a href="merit.html" class="hover:text-sky-500 transition-colors nav-link">Merit</a>
+                <a href="notes.html" class="hover:text-sky-500 transition-colors nav-link">Notes</a>
+                <a href="feedback.html" class="hover:text-sky-500 transition-colors nav-link">TutoFeedback</a>
+                <a href="testimonials.html" class="hover:text-sky-500 transition-colors nav-link">Testimonials</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div id="merit-points-container" class="flex items-center space-x-1 px-3 py-1 bg-gray-800 rounded-full text-yellow-300 font-semibold shadow-inner transition-transform hidden">
+                    <svg class="w-5 h-5 text-yellow-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="8" r="6"></circle>
+                        <path d="M18 6v14a2 2 0 0 1-2 2H4"></path>
+                        <path d="M3 14h6"></path>
+                        <path d="M16 12a2 2 0 1 0-4 0 2 2 0 0 0 4 0z"></path>
+                        <path d="M14 12v6"></path>
+                        <path d="M14 18h6"></path>
+                        <path d="M22 18h-6"></path>
+                    </svg>
+                    <span id="merit-points">0 Merit</span>
+                </div>
+                <button id="sign-out-btn" class="px-4 py-2 rounded-full text-gray-200 font-medium hover:bg-gray-800 transition-colors hidden">Sign Out</button>
+                <a href="SignIn.html" id="sign-in-btn" class="px-4 py-2 rounded-full text-white font-bold bg-gray-700 hover:bg-gray-600 transition-all transform hover:-translate-y-1 shadow-lg">Sign In</a>
+                <a href="SignIn.html" id="get-started-btn" class="px-5 py-2 rounded-full text-white font-medium bg-sky-500 hover:bg-sky-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-20 px-6 bg-gray-900 min-h-screen">
+        <section id="notes" class="container mx-auto text-center">
+            <h2 class="text-4xl font-bold text-white mb-4">Shared Files & Assignments</h2>
+            <p class="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
+                View and download files shared by the community. You can also upload your own to help others!
+            </p>
+
+            <div id="logged-out-message" class="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 space-y-4 hidden">
+                <p class="text-lg text-gray-300">Please sign in to access and contribute to the files.</p>
+            </div>
+
+            <div id="notes-content" class="flex flex-col gap-6 hidden">
+                <div class="flex-1">
+                    <h3 class="text-2xl font-semibold text-white mb-4 text-left">Shared Files</h3>
+                    <div class="flex flex-wrap gap-4 mb-6 justify-center md:justify-start">
+                        <button class="filter-btn active px-4 py-2 rounded-full bg-sky-500 text-white font-medium hover:bg-sky-600 transition-colors" data-category="All">All</button>
+                        <button class="filter-btn px-4 py-2 rounded-full bg-gray-700 text-gray-300 font-medium hover:bg-gray-600 transition-colors" data-category="Assignment">Assignments</button>
+                        <button class="filter-btn px-4 py-2 rounded-full bg-gray-700 text-gray-300 font-medium hover:bg-gray-600 transition-colors" data-category="Past Year Paper">Past Year Papers</button>
+                        <button class="filter-btn px-4 py-2 rounded-full bg-gray-700 text-gray-300 font-medium hover:bg-gray-600 transition-colors" data-category="Notes">Notes</button>
+                        <button class="filter-btn px-4 py-2 rounded-full bg-gray-700 text-gray-300 font-medium hover:bg-gray-600 transition-colors" data-category="Others">Others</button>
+                    </div>
+
+                    <div id="files-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+                </div>
+            </div>
+
+            <div id="add-content-section" class="mt-12 bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 hidden">
+                <h3 class="text-2xl font-semibold text-white mb-4">Upload a File</h3>
+                <form id="upload-file-form" class="space-y-4">
+                    <div>
+                        <label for="file-category" class="block text-gray-200 font-medium mb-2 text-left">File Type</label>
+                        <select id="file-category" class="w-full px-4 py-3 rounded-lg border border-gray-700 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-sky-500" required>
+                            <option value="">Select a category</option>
+                            <option value="Assignment">Assignment</option>
+                            <option value="Past Year Paper">Past Year Paper</option>
+                            <option value="Notes">Notes</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="file-upload" class="block text-gray-200 font-medium mb-2 text-left">Choose File</label>
+                        <input type="file" id="file-upload" class="w-full text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-sky-500 file:text-white hover:file:bg-sky-600" required />
+                    </div>
+                    <button type="submit" class="w-full px-6 py-3 rounded-full text-white font-bold bg-sky-500 hover:bg-sky-600 transition-all transform hover:-translate-y-1 shadow-lg">
+                        Upload File
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-950 text-white py-12 px-6">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">BrainBoost</h3>
+                <p class="text-gray-400">Your last-minute academic lifebuoy</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="features.html" class="hover:text-sky-400 transition-colors">Features</a></li>
+                    <li><a href="tutors.html" class="hover:text-sky-400 transition-colors">Tutors</a></li>
+                    <li><a href="pricing.html" class="hover:text-sky-400 transition-colors">Pricing</a></li>
+                    <li><a href="merit.html" class="hover:text-sky-400 transition-colors">Merit</a></li>
+                    <li><a href="notes.html" class="hover:text-sky-400 transition-colors">Notes</a></li>
+                    <li><a href="feedback.html" class="hover:text-sky-400 transition-colors">TutoFeedback</a></li>
+                    <li><a href="testimonials.html" class="hover:text-sky-500 transition-colors nav-link">Testimonials</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="#" class="hover:text-sky-400 transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-sky-400 transition-colors">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li>Email: info@brainboost.com</li>
+                    <li>Phone: +1 (123) 456-7890</li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 mt-8">
+            © 2024 BrainBoost. All rights reserved.
+        </div>
+    </footer>
+
+    <div id="edit-modal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-gray-900 bg-opacity-75 backdrop-blur-sm hidden">
+        <div class="bg-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-md mx-4">
+            <div class="flex justify-end">
+                <button id="close-edit-modal-btn" class="text-gray-400 hover:text-gray-200 transition-colors">
+                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 6L6 18"></path>
+                        <path d="M6 6L18 18"></path>
+                    </svg>
+                </button>
+            </div>
+            <h2 class="text-3xl font-bold text-center text-white mb-6">Edit File</h2>
+            <form id="edit-file-form" class="space-y-4">
+                <div>
+                    <label for="edit-file-name" class="block text-gray-200 font-medium mb-2 text-left">File Name</label>
+                    <input type="text" id="edit-file-name" class="w-full px-4 py-3 rounded-lg border border-gray-700 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-sky-500" required />
+                </div>
+                <div>
+                    <label for="edit-file-category" class="block text-gray-200 font-medium mb-2 text-left">File Type</label>
+                    <select id="edit-file-category" class="w-full px-4 py-3 rounded-lg border border-gray-700 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-sky-500" required>
+                        <option value="Assignment">Assignment</option>
+                        <option value="Past Year Paper">Past Year Paper</option>
+                        <option value="Notes">Notes</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full px-6 py-3 rounded-full text-white font-bold bg-sky-500 hover:bg-sky-600 transition-all transform hover:-translate-y-1 shadow-lg">
+                    Save Changes
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- UI Elements ---
+            const signInBtn = document.getElementById('sign-in-btn');
+            const getStartedBtn = document.getElementById('get-started-btn');
+            const signOutBtn = document.getElementById('sign-out-btn');
+            const meritPointsContainer = document.getElementById('merit-points-container');
+            const meritPointsEl = document.getElementById('merit-points');
+            const notesContentSection = document.getElementById('notes-content');
+            const loggedOutMessage = document.getElementById('logged-out-message');
+            const addContentSection = document.getElementById('add-content-section');
+            const filesContainer = document.getElementById('files-container');
+            const uploadFileForm = document.getElementById('upload-file-form');
+            const fileUploadInput = document.getElementById('file-upload');
+            const fileCategoryInput = document.getElementById('file-category');
+            const editModal = document.getElementById('edit-modal');
+            const closeEditModalBtn = document.getElementById('close-edit-modal-btn');
+            const editFileForm = document.getElementById('edit-file-form');
+            const editFileNameInput = document.getElementById('edit-file-name');
+            const editFileCategoryInput = document.getElementById('edit-file-category');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+
+            let allFiles = [];
+            let currentFileIndex = -1;
+
+            // Function to update UI based on login status
+            const updateAuthUI = (loggedIn) => {
+                if (loggedIn) {
+                    signInBtn.classList.add('hidden');
+                    getStartedBtn.classList.add('hidden');
+                    signOutBtn.classList.remove('hidden');
+                    meritPointsContainer.classList.remove('hidden');
+                } else {
+                    signInBtn.classList.remove('hidden');
+                    getStartedBtn.classList.remove('hidden');
+                    signOutBtn.classList.add('hidden');
+                    meritPointsContainer.classList.add('hidden');
+                }
+            };
+
+            // Function to check user status and update content visibility
+            const checkAndLoadNotes = () => {
+                const loggedIn = localStorage.getItem('loggedIn') === 'true';
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+                updateAuthUI(loggedIn);
+
+                if (loggedIn) {
+                    loggedOutMessage.classList.add('hidden');
+                    notesContentSection.classList.remove('hidden');
+                    addContentSection.classList.remove('hidden');
+                    if (currentUser && currentUser.meritPoints !== undefined) {
+                        meritPointsEl.textContent = `${currentUser.meritPoints} Merit`;
+                    }
+                } else {
+                    loggedOutMessage.classList.remove('hidden');
+                    notesContentSection.classList.remove('hidden'); // Notes should still be visible to view files
+                    addContentSection.classList.add('hidden');
+                }
+
+                loadAllFiles();
+            };
+
+            // Event listener for the Sign Out button
+            signOutBtn.addEventListener('click', () => {
+                localStorage.removeItem('loggedIn');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('userEmail');
+                updateAuthUI(false);
+                meritPointsEl.textContent = '0 Merit';
+                checkAndLoadNotes(); // Update notes section after signing out
+            });
+
+            // Function to load all files from local storage
+            function loadAllFiles() {
+                allFiles = JSON.parse(localStorage.getItem('sharedFiles')) || [];
+                displayFiles(allFiles);
+            }
+
+            // Function to display files based on a filtered list
+            function displayFiles(filesToDisplay) {
+                filesContainer.innerHTML = '';
+                const isLoggedIn = localStorage.getItem('loggedIn') === 'true';
+                const userEmail = localStorage.getItem('userEmail');
+
+                if (filesToDisplay.length > 0) {
+                    filesToDisplay.forEach((file, index) => {
+                        const fileCard = createFileCard(file, index, isLoggedIn, userEmail);
+                        filesContainer.appendChild(fileCard);
+                    });
+                } else {
+                    filesContainer.innerHTML = '<p class="text-gray-500 text-center col-span-full">No files in this category have been shared yet.</p>';
+                }
+            }
+
+            // Function to create an HTML element for a file card
+            function createFileCard(file, index, isLoggedIn, userEmail) {
+                const card = document.createElement('div');
+                card.className = 'bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 flex flex-col items-center justify-between';
+                
+                let actionButtons = `
+                    <div class="flex space-x-2 w-full">
+                        <a href="${file.dataURL}" target="_blank" class="flex-1 px-4 py-2 bg-gray-600 text-white rounded-full text-sm font-semibold hover:bg-gray-700 transition-colors text-center">View</a>
+                        <a href="${file.dataURL}" download="${file.name}" class="flex-1 px-4 py-2 bg-sky-500 text-white rounded-full text-sm font-semibold hover:bg-sky-600 transition-colors text-center">Download</a>
+                    </div>
+                `;
+
+                // Add edit and delete buttons only if the user is logged in and is the uploader
+                if (isLoggedIn && file.uploaderEmail === userEmail) {
+                    actionButtons = `
+                        <div class="flex space-x-2 w-full">
+                            <button class="edit-btn flex-1 px-4 py-2 bg-yellow-500 text-white rounded-full text-sm font-semibold hover:bg-yellow-600 transition-colors" data-index="${index}">Edit</button>
+                            <button class="delete-btn flex-1 px-4 py-2 bg-red-500 text-white rounded-full text-sm font-semibold hover:bg-red-600 transition-colors" data-index="${index}">Delete</button>
+                        </div>
+                    `;
+                }
+
+                card.innerHTML = `
+                    <div class="flex flex-col items-center space-y-2 text-center w-full mb-4">
+                        <svg class="w-12 h-12 text-sky-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                        <p class="text-white font-semibold break-words">${file.name}</p>
+                        <p class="text-sm text-gray-400">Category: ${file.category}</p>
+                    </div>
+                    ${actionButtons}
+                `;
+
+                // Add event listeners for edit and delete buttons
+                if (isLoggedIn && file.uploaderEmail === userEmail) {
+                    const editBtn = card.querySelector('.edit-btn');
+                    const deleteBtn = card.querySelector('.delete-btn');
+
+                    editBtn.addEventListener('click', () => {
+                        const fileIndex = parseInt(editBtn.dataset.index);
+                        const fileToEdit = allFiles[fileIndex];
+                        currentFileIndex = fileIndex;
+                        editFileNameInput.value = fileToEdit.name;
+                        editFileCategoryInput.value = fileToEdit.category;
+                        editModal.classList.remove('hidden');
+                    });
+
+                    deleteBtn.addEventListener('click', () => {
+                        const fileIndex = parseInt(deleteBtn.dataset.index);
+                        if (confirm('Are you sure you want to delete this file?')) {
+                            allFiles.splice(fileIndex, 1);
+                            localStorage.setItem('sharedFiles', JSON.stringify(allFiles));
+                            displayFiles(allFiles);
+                        }
+                    });
+                }
+                
+                return card;
+            }
+
+            // Handle file upload form submission
+            uploadFileForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const file = fileUploadInput.files[0];
+                const category = fileCategoryInput.value;
+                const userEmail = localStorage.getItem('userEmail');
+
+                if (file && category && userEmail) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const fileDataURL = e.target.result;
+                        const newFile = {
+                            name: file.name,
+                            category: category,
+                            dataURL: fileDataURL,
+                            uploaderEmail: userEmail
+                        };
+
+                        allFiles.push(newFile);
+                        localStorage.setItem('sharedFiles', JSON.stringify(allFiles));
+
+                        uploadFileForm.reset();
+                        displayFiles(allFiles);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Handle edit form submission
+            editFileForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                if (currentFileIndex > -1) {
+                    allFiles[currentFileIndex].name = editFileNameInput.value;
+                    allFiles[currentFileIndex].category = editFileCategoryInput.value;
+                    localStorage.setItem('sharedFiles', JSON.stringify(allFiles));
+                    editModal.classList.add('hidden');
+                    displayFiles(allFiles);
+                }
+            });
+
+            // Add event listeners to filter buttons
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('active', 'bg-sky-500', 'text-white');
+                        btn.classList.add('bg-gray-700', 'text-gray-300');
+                    });
+                    
+                    button.classList.add('active', 'bg-sky-500', 'text-white');
+                    button.classList.remove('bg-gray-700', 'text-gray-300');
+
+                    const category = button.dataset.category;
+                    if (category === 'All') {
+                        displayFiles(allFiles);
+                    } else {
+                        const filteredFiles = allFiles.filter(file => file.category === category);
+                        displayFiles(filteredFiles);
+                    }
+                });
+            });
+
+            // Close edit modal
+            closeEditModalBtn.addEventListener('click', () => {
+                editModal.classList.add('hidden');
+            });
+
+            // Initial call to check user status and load notes
+            checkAndLoadNotes();
+        });
+    </script>
+</body>
+</html>

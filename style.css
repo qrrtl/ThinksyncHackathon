@@ -1,0 +1,96 @@
+/* Custom premium theme styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --primary-color: #38bdf8; /* Sky-500 */
+    --secondary-color: #60a5fa; /* Blue-400 */
+    --background-dark: #1f2937; /* Gray-800 */
+    --background-light: #374151; /* Gray-700 */
+    --text-light: #f3f4f6; /* Gray-100 */
+    --text-muted: #d1d5db; /* Gray-400 */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background-dark);
+    color: var(--text-light);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.modal-overlay {
+    display: none;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.nav-link {
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-color);
+}
+
+.transition-all {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover\:text-blue-600:hover {
+    color: #3b82f6;
+}
+
+.hover\:bg-blue-700:hover {
+    background-color: #1d4ed8;
+}
+
+.hover\:shadow-xl:hover {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.transform {
+    transform: none;
+}
+
+.hover\:-translate-y-1:hover {
+    transform: translateY(-4px);
+}
+
+.hover\:scale-105:hover {
+    transform: scale(1.05);
+}
+
+.hover\:shadow-blue-500\/50:hover {
+    box-shadow: 0 20px 50px rgba(59, 130, 246, 0.5);
+}
+
+/* Animations for premium theme */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-slide-in-up {
+    animation: slideInUp 0.8s ease-out forwards;
+}
+
+/* Specific elements premium styling */
+.premium-gradient {
+    background: linear-gradient(135deg, #4c51bf, #6b46c1);
+    color: white;
+}

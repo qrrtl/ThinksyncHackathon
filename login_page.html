@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost University Tutoring</title>
+    <!-- Use Tailwind CSS for a sleek, responsive design -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font for clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Define custom styles and keyframes for animations */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        html {
+            /* Enable native smooth scrolling */
+            scroll-behavior: smooth;
+        }
+        .modal-overlay {
+            display: none;
+            /* Add animation for modal fade-in */
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        @keyframes pulse-merit {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .animate-merit-pulse {
+            animation: pulse-merit 1.5s infinite;
+        }
+        
+        .main-content {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
+    <!-- Login/Signup Modal (Initially Active) -->
+    <div id="auth-modal" class="modal-overlay active fixed inset-0 bg-gray-900 bg-opacity-75 z-50 flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md mx-auto transform transition-all duration-300 scale-100">
+            <h2 id="auth-title" class="text-3xl font-bold text-center text-gray-800 mb-6">Sign Up</h2>
+            <div id="message-box" class="hidden mb-4 p-3 rounded-lg text-sm text-center font-medium" role="alert"></div>
+
+            <form id="auth-form" class="space-y-4">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <input type="email" id="email" name="email" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="password" name="password" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                </div>
+                <div id="role-selection" class="hidden">
+                    <label for="role" class="block text-sm font-medium text-gray-700">I am a...</label>
+                    <select id="role" name="role" required class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        <option value="student">Student</option>
+                        <option value="tutor">Tutor</option>
+                    </select>
+                </div>
+                <div id="loading-spinner" class="hidden flex justify-center items-center">
+                    <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                </div>
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
+                        <span id="auth-button-text">Sign Up</span>
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-6 text-center">
+                <p id="toggle-auth-text" class="text-sm text-gray-600">Already have an account? 
+                    <button id="toggle-auth-btn" class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline">
+                        Log In
+                    </button>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Main App Content (Initially Hidden) -->
+    <div id="main-content" class="main-content">
+        <header class="bg-white shadow-sm p-4 sticky top-0 z-40">
+            <div class="container mx-auto flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-gray-900">BrainBoost</h1>
+                <div class="flex items-center space-x-4">
+                    <p class="text-lg font-medium text-gray-700">Merit Points: <span id="merit-points" class="font-extrabold text-blue-600">0</span></p>
+                    <button id="logout-btn" class="px-3 py-1 bg-red-500 text-white rounded-lg text-sm font-medium hover:bg-red-600 transition duration-150">Sign Out</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="container mx-auto p-4 flex-grow">
+            <!-- User ID Display -->
+            <div class="bg-blue-100 text-blue-800 p-3 rounded-lg mb-6">
+                <p class="text-sm font-mono break-all">User ID: <span id="user-id">Loading...</span></p>
+            </div>
+
+            <!-- Gamification Section -->
+            <section class="bg-white p-6 rounded-2xl shadow-lg mb-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Gamification Center</h2>
+                <div id="gamification-message" class="hidden p-3 rounded-lg text-sm text-center font-medium transition-all duration-300 mb-4"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Daily Reward Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-inner text-center transform hover:scale-105 transition duration-200">
+                        <h3 class="font-semibold text-lg text-gray-800 mb-2">Daily Reward</h3>
+                        <p class="text-gray-600 mb-4">Claim 100 Merit points once every 24 hours!</p>
+                        <button id="claim-daily-btn" class="w-full py-3 px-4 rounded-full font-bold text-white bg-green-500 hover:bg-green-600 transition duration-150 ease-in-out">
+                            Claim Reward
+                        </button>
+                    </div>
+                    <!-- Quiz Completion Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-inner text-center transform hover:scale-105 transition duration-200">
+                        <h3 class="font-semibold text-lg text-gray-800 mb-2">Quiz Complete</h3>
+                        <p class="text-gray-600 mb-4">Earn 100 Merit points for completing a quiz.</p>
+                        <button id="quiz-complete-btn" class="w-full py-3 px-4 rounded-full font-bold text-white bg-blue-500 hover:bg-blue-600 transition duration-150 ease-in-out">
+                            Complete Quiz
+                        </button>
+                    </div>
+                    <!-- Multiplayer Challenge Card -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-inner text-center transform hover:scale-105 transition duration-200">
+                        <h3 class="font-semibold text-lg text-gray-800 mb-2">Multiplier Game</h3>
+                        <p class="text-gray-600 mb-4">Get a random multiplier (1x-5x) for 10 Merit.</p>
+                        <p class="text-4xl font-extrabold text-gray-900 mb-4"><span id="multiplier-output">1x</span></p>
+                        <button id="multiplier-btn" class="w-full py-3 px-4 rounded-full font-bold text-white bg-purple-500 hover:bg-purple-600 transition duration-150 ease-in-out">
+                            Play Game
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Merit Shop Section -->
+            <section class="bg-white p-6 rounded-2xl shadow-lg">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Merit Shop</h2>
+                <div id="merit-shop-message" class="hidden p-3 rounded-lg text-sm text-center font-medium transition-all duration-300 mb-4"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Premium Session Redemption -->
+                    <div class="bg-gray-50 p-6 rounded-xl shadow-inner text-center transform hover:scale-105 transition duration-200">
+                        <h3 class="font-semibold text-lg text-gray-800 mb-2">Premium Session</h3>
+                        <p class="text-gray-600 mb-4">Redeem a free 1-on-1 tutoring session.</p>
+                        <p class="font-bold text-gray-900 mb-4">Cost: <span class="text-blue-600 font-extrabold">200 Merit</span></p>
+                        <button id="redeem-btn" class="w-full py-3 px-4 rounded-full font-bold text-white bg-yellow-500 hover:bg-yellow-600 transition duration-150 ease-in-out">
+                            Redeem
+                        </button>
+                    </div>
+                    <!-- Other items... -->
+                </div>
+            </section>
+        </main>
+
+        <footer class="bg-gray-800 text-white text-center p-4 mt-8">
+            <p class="text-sm">&copy; 2023 BrainBoost University. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <!-- Firebase Libraries -->
+    <script type="module">
+        // Firebase global variables
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Firebase Imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc, onSnapshot, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // DOM Elements
+        const authModal = document.getElementById('auth-modal');
+        const mainContent = document.getElementById('main-content');
+        const authTitle = document.getElementById('auth-title');
+        const authForm = document.getElementById('auth-form');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const roleSelection = document.getElementById('role-selection');
+        const roleInput = document.getElementById('role');
+        const authButtonText = document.getElementById('auth-button-text');
+        const toggleAuthBtn = document.getElementById('toggle-auth-btn');
+        const toggleAuthText = document.getElementById('toggle-auth-text');
+        const messageBox = document.getElementById('message-box');
+        const loadingSpinner = document.getElementById('loading-spinner');
+        const userIdDisplay = document.getElementById('user-id');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        const meritPointsDisplay = document.getElementById('merit-points');
+        const gamificationMessage = document.getElementById('gamification-message');
+        const meritShopMessage = document.getElementById('merit-shop-message');
+        const claimDailyBtn = document.getElementById('claim-daily-btn');
+        const quizCompleteBtn = document.getElementById('quiz-complete-btn');
+        const multiplierBtn = document.getElementById('multiplier-btn');
+        const multiplierOutput = document.getElementById('multiplier-output');
+        const redeemBtn = document.getElementById('redeem-btn');
+
+        // Firebase Initialization
+        let auth;
+        let db;
+        let userDataRef;
+        let unsubscribeUserData;
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            // Log for debugging
+            console.log("Firebase initialized successfully.");
+        } catch (e) {
+            console.error("Firebase initialization error:", e);
+        }
+
+        // Helper function to show messages in the modal
+        function showMessage(messageBox, message, isSuccess) {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800');
+            if (isSuccess) {
+                messageBox.classList.add('bg-green-100', 'text-green-800');
+            } else {
+                messageBox.classList.add('bg-red-100', 'text-red-800');
+            }
+        }
+
+        // Update UI based on authentication state and role
+        async function updateUI(user) {
+            if (user) {
+                const userId = user.uid;
+                userIdDisplay.textContent = userId;
+                userDataRef = doc(db, 'artifacts', appId, 'users', userId, 'data', 'userData');
+
+                // Get the user's role and redirect
+                const docSnap = await getDoc(userDataRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    if (data.role === 'tutor') {
+                        // Redirect to the tutor page
+                        window.location.href = 'tutor.html';
+                        return;
+                    }
+                }
+                
+                // If user is a student or role not found, show the main content
+                authModal.classList.remove('active');
+                mainContent.style.display = 'block';
+
+                // Set up a real-time listener for user data
+                unsubscribeUserData = onSnapshot(userDataRef, (docSnap) => {
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        meritPointsDisplay.textContent = data.meritPoints || 0;
+                    } else {
+                        // Create a new document if it doesn't exist
+                        setDoc(userDataRef, { meritPoints: 0, lastDailyReward: null, role: 'student' });
+                        meritPointsDisplay.textContent = 0;
+                    }
+                }, (error) => {
+                    console.error("Error listening to user data:", error);
+                });
+            } else {
+                // User is signed out, show modal and hide main content
+                authModal.classList.add('active');
+                mainContent.style.display = 'none';
+                if (unsubscribeUserData) {
+                    unsubscribeUserData();
+                }
+            }
+        }
+
+        // Auth state change listener
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // Check if user data exists before calling updateUI
+                const docSnap = await getDoc(doc(db, 'artifacts', appId, 'users', user.uid, 'data', 'userData'));
+                if (docSnap.exists()) {
+                    updateUI(user);
+                } else {
+                    // This is a new user, wait for form submission to create the data
+                }
+            } else {
+                 updateUI(user);
+            }
+        });
+
+        // Toggle between Login and Sign Up views
+        toggleAuthBtn.addEventListener('click', () => {
+            messageBox.classList.add('hidden');
+            if (authMode === 'signup') {
+                authMode = 'login';
+                authTitle.textContent = 'Log In';
+                authButtonText.textContent = 'Log In';
+                roleSelection.classList.add('hidden');
+                toggleAuthText.innerHTML = 'Don\'t have an account? <button id="toggle-auth-btn" class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline">Sign Up</button>';
+            } else {
+                authMode = 'signup';
+                authTitle.textContent = 'Sign Up';
+                authButtonText.textContent = 'Sign Up';
+                roleSelection.classList.remove('hidden');
+                toggleAuthText.innerHTML = 'Already have an account? <button id="toggle-auth-btn" class="font-medium text-blue-600 hover:text-blue-500 focus:outline-none focus:underline">Log In</button>';
+            }
+        });
+
+        // Handle form submission for sign-up and login
+        authForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loadingSpinner.classList.remove('hidden');
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            const role = roleInput.value;
+            messageBox.classList.add('hidden');
+            
+            try {
+                if (authMode === 'signup') {
+                    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                    const userId = userCredential.user.uid;
+                    const userDataRef = doc(db, 'artifacts', appId, 'users', userId, 'data', 'userData');
+                    await setDoc(userDataRef, { meritPoints: 0, lastDailyReward: null, role: role });
+                    showMessage(messageBox, "Sign up successful! Welcome.", true);
+                    updateUI(userCredential.user);
+                // ...inside the authForm.addEventListener('submit', ...)
+                } else { // This is the login block
+                    const user = users.find(u => u.email === email && u.password === password && u.role === role);
+                    if (user) {
+                        // If user is a new user, initialize meritPoints
+                        if (user.meritPoints === undefined) {
+                            user.meritPoints = 0;
+                        }
+                        
+                        // This is the new line you will add
+                        user.meritPoints += 1; // Increment merit points by 1
+                        
+                        localStorage.setItem('users', JSON.stringify(users)); // Save the updated users array
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+                        localStorage.setItem('loggedIn', 'true');
+                        message = 'Login successful! Redirecting...';
+                        success = true;
+                    } else {
+                        message = 'Invalid email, password, or role.';
+                    }
+                }
+// ... the rest of your code
+            } catch (error) {
+                console.error(error);
+                let errorMessage;
+                switch (error.code) {
+                    case 'auth/email-already-in-use':
+                        errorMessage = "This email is already in use.";
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = "Invalid email address.";
+                        break;
+                    case 'auth/operation-not-allowed':
+                        errorMessage = "Email/password accounts are not enabled.";
+                        break;
+                    case 'auth/weak-password':
+                        errorMessage = "Password is too weak.";
+                        break;
+                    case 'auth/user-not-found':
+                    case 'auth/wrong-password':
+                        errorMessage = "Invalid email or password.";
+                        break;
+                    default:
+                        errorMessage = "An unknown error occurred. Please try again.";
+                }
+                showMessage(messageBox, errorMessage, false);
+            } finally {
+                loadingSpinner.classList.add('hidden');
+            }
+        });
+
+        // Sign in anonymously on initial load if no user is signed in
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                signInAnonymously(auth);
+            }
+        });
+
+        // Logout function
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                console.log("User signed out.");
+            } catch (error) {
+                console.error("Error signing out:", error);
+            }
+        });
+        
+        // --- Existing Gamification Logic Refactored for Firestore ---
+        
+        async function updateMeritPoints(pointsToAdd) {
+            const docSnap = await getDoc(userDataRef);
+            if (docSnap.exists()) {
+                const currentPoints = docSnap.data().meritPoints || 0;
+                await updateDoc(userDataRef, { meritPoints: currentPoints + pointsToAdd });
+            }
+        }
+        
+        // Daily Reward Logic
+        claimDailyBtn.addEventListener('click', async () => {
+            const docSnap = await getDoc(userDataRef);
+            if (docSnap.exists()) {
+                const lastClaim = docSnap.data().lastDailyReward;
+                const now = new Date();
+                const twentyFourHours = 24 * 60 * 60 * 1000;
+                
+                if (!lastClaim || (now.getTime() - lastClaim.toDate().getTime() > twentyFourHours)) {
+                    await updateDoc(userDataRef, { 
+                        meritPoints: (docSnap.data().meritPoints || 0) + 100,
+                        lastDailyReward: now
+                    });
+                    showMessage(gamificationMessage, 'You claimed your daily reward of 100 Merit!', true);
+                } else {
+                    showMessage(gamificationMessage, 'You have already claimed your daily reward!', false);
+                }
+            }
+        });
+
+        // Quiz Completion Logic
+        quizCompleteBtn.addEventListener('click', async () => {
+            await updateMeritPoints(100);
+            showMessage(gamificationMessage, 'You earned 100 Merit for completing the quiz!', true);
+        });
+        
+        // Multiplier Game Logic
+        multiplierBtn.addEventListener('click', async () => {
+            const multiplier = Math.floor(Math.random() * 5) + 1; // Generates a random number from 1 to 5
+            const pointsEarned = 10 * multiplier;
+            await updateMeritPoints(pointsEarned);
+            multiplierOutput.textContent = `${multiplier}x`;
+            showMessage(gamificationMessage, `You won! Your multiplier was ${multiplier}x, earning you ${pointsEarned} Merit!`, true);
+        });
+
+        // Merit Shop Redemption Logic
+        redeemBtn.addEventListener('click', async () => {
+            const cost = 200;
+            const docSnap = await getDoc(userDataRef);
+            if (docSnap.exists() && docSnap.data().meritPoints >= cost) {
+                await updateMeritPoints(-cost);
+                showMessage(meritShopMessage, 'Success! You redeemed a free premium session!', true);
+            } else {
+                showMessage(meritShopMessage, 'Not enough Merit points to redeem this item.', false);
+            }
+        });
+
+    </script>
+</body>
+</html>

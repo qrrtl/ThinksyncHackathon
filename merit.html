@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainBoost - Merit Program</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            /* Add these for proper positioning of the absolute overlay */
+            position: relative;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+        }
+        .content-locked {
+            filter: blur(8px);
+            pointer-events: none; /* Disables clicks on blurred content */
+            transition: filter 0.5s ease-in-out;
+        }
+        .login-overlay {
+            /* Updated styles for perfect centering */
+            position: fixed; /* Use fixed to center relative to viewport */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex; /* Use flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            z-index: 10;
+            background-color: rgba(0, 0, 0, 0.5); /* Optional: add a semi-transparent background to the overlay itself */
+        }
+        .login-overlay > div { /* Target the inner box for max-width */
+            max-width: 90%; /* Responsive max-width */
+            width: 400px; /* Or a specific max-width for the modal */
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200">
+
+    <header class="fixed top-0 w-full bg-gray-900 bg-opacity-90 backdrop-blur-md z-50 shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-white">
+                <a href="index.html" class="hover:text-sky-500 transition-colors">BrainBoost</a>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-gray-400 font-medium">
+                <a href="features.html" class="hover:text-sky-500 transition-colors nav-link">Features</a>
+                <a href="tutors.html" class="hover:text-sky-500 transition-colors nav-link">Tutors</a>
+                <a href="pricing.html" class="hover:text-sky-500 transition-colors nav-link">Pricing</a>
+                <a href="merit.html" class="hover:text-sky-500 transition-colors nav-link">Merit</a>
+                <a href="notes.html" class="hover:text-sky-500 transition-colors nav-link">Notes</a>
+                <a href="feedback.html" class="hover:text-sky-500 transition-colors nav-link">TutoFeedback</a>
+                <a href="testimonials.html" class="hover:text-sky-500 transition-colors nav-link">Testimonials</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div id="merit-points-container" class="flex items-center space-x-1 px-3 py-1 bg-gray-800 rounded-full text-yellow-300 font-semibold shadow-inner transition-transform hidden">
+                    <svg class="w-5 h-5 text-yellow-300" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="8" cy="8" r="6"></circle>
+                        <path d="M18 6v14a2 2 0 0 1-2 2H4"></path>
+                        <path d="M3 14h6"></path>
+                        <path d="M16 12a2 2 0 1 0-4 0 2 2 0 0 0 4 0z"></path>
+                        <path d="M14 12v6"></path>
+                        <path d="M14 18h6"></path>
+                        <path d="M22 18h-6"></path>
+                    </svg>
+                    <span id="merit-points">0 Merit</span>
+                </div>
+                <button id="sign-out-btn" class="px-4 py-2 rounded-full text-gray-200 font-medium hover:bg-gray-800 transition-colors hidden">Sign Out</button>
+                <a href="SignIn.html" id="sign-in-btn" class="px-4 py-2 rounded-full text-white font-bold bg-gray-700 hover:bg-gray-600 transition-all transform hover:-translate-y-1 shadow-lg">Sign In</a>
+                <a href="SignIn.html" id="get-started-btn" class="px-5 py-2 rounded-full text-white font-medium bg-sky-500 hover:bg-sky-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <div id="login-overlay-message" class="login-overlay hidden">
+        <div class="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 text-center space-y-4">
+            <h3 class="text-xl md:text-2xl font-bold text-white">Content Locked</h3>
+            <p class="text-gray-400">Please sign in to view the Merit Program and start earning points!</p>
+            <a href="SignIn.html" class="inline-block px-6 py-3 rounded-full text-white font-bold bg-sky-500 hover:bg-sky-600 transition-all transform hover:-translate-y-1 shadow-lg">Sign In Now</a>
+        </div>
+    </div>
+    
+    <div id="merit-content" class="content-locked">
+        <main>
+            <section id="merit-program" class="py-20 px-6 bg-gradient-to-br from-gray-800 to-gray-900 min-h-screen">
+                <div class="container mx-auto text-center animate-slide-in-up">
+                    <h2 class="text-4xl font-bold text-white mb-4">Earn and Redeem Merit Points</h2>
+                    <p class="text-lg text-gray-400 mb-12">Participate in challenges, complete quizzes, and redeem rewards for your dedication!</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div id="gamification-section" class="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 text-left">
+                            <h3 class="text-2xl font-semibold text-white mb-4">Gamification Center</h3>
+                            <p class="text-gray-400 mb-4">Engage with our activities to earn Merit points. Check back daily!</p>
+                            <div id="gamification-message" class="bg-green-800 text-green-200 px-4 py-3 rounded-lg text-center mb-4 hidden"></div>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-semibold text-white mb-2">Daily Reward</h4>
+                                    <button id="daily-reward-btn" class="w-full px-6 py-3 rounded-full text-black font-bold bg-yellow-300 hover:bg-yellow-400 transition-colors shadow-md">
+                                        Claim Daily Reward (+20 Merit)
+                                    </button>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-2">Complete a Quiz</h4>
+                                    <button id="quiz-complete-btn" class="w-full px-6 py-3 rounded-full text-white font-bold bg-green-600 hover:bg-green-700 transition-colors shadow-md">
+                                        Earn 100 Merit
+                                    </button>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-2">Play Multiplier Game</h4>
+                                    <div class="flex items-center justify-between">
+                                        <button id="multiplier-btn" class="px-6 py-3 rounded-full text-white font-bold bg-sky-500 hover:bg-sky-600 transition-colors shadow-md">
+                                            Spin for a Multiplier
+                                        </button>
+                                        <div class="text-xl font-bold text-white">Your Multiplier: <span id="multiplier-output" class="text-sky-500">0x</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="merit-shop" class="bg-gray-800 p-8 rounded-2xl shadow-lg border border-gray-700 text-left">
+                            <h3 class="text-2xl font-semibold text-white mb-4">Merit Shop</h3>
+                            <p class="text-gray-400 mb-4">Redeem your hard-earned Merit points for valuable rewards.</p>
+                            <div id="merit-shop-message" class="bg-green-800 text-green-200 px-4 py-3 rounded-lg text-center mb-4 hidden"></div>
+                            <div class="space-y-4">
+                                <div class="p-4 rounded-lg border border-gray-700 flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-semibold text-white">Free Premium Session</h4>
+                                        <p class="text-gray-400 text-sm">A one-on-one session with a premium tutor.</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="block font-bold text-white">200 Merit</span>
+                                        <button id="redeem-btn" class="mt-2 px-4 py-2 rounded-full text-white font-medium bg-purple-600 hover:bg-purple-700 transition-colors text-sm">
+                                            Redeem
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="p-4 rounded-lg border border-gray-700 flex justify-between items-center">
+                                    <div>
+                                        <h4 class="font-semibold text-white">Access to Exclusive Notes</h4>
+                                        <p class="text-gray-400 text-sm">Unlock a library of premium study guides.</p>
+                                    </div>
+                                    <div class="text-right">
+                                        <span class="block font-bold text-white">150 Merit</span>
+                                        <button class="mt-2 px-4 py-2 rounded-full text-white font-medium bg-purple-600 hover:bg-purple-700 transition-colors text-sm">
+                                            Redeem
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="bg-gray-950 text-white py-12 px-6">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">BrainBoost</h3>
+                <p class="text-gray-400">Your last-minute academic lifebuoy</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="features.html" class="hover:text-sky-400 transition-colors">Features</a></li>
+                    <li><a href="tutors.html" class="hover:text-sky-400 transition-colors">Tutors</a></li>
+                    <li><a href="pricing.html" class="hover:text-sky-400 transition-colors">Pricing</a></li>
+                    <li><a href="merit.html" class="hover:text-sky-400 transition-colors">Merit</a></li>
+                    <li><a href="notes.html" class="hover:text-sky-400 transition-colors">Notes</a></li>
+                    <li><a href="feedback.html" class="hover:text-sky-400 transition-colors">TutoFeedback</a></li>
+                    <li><a href="testimonials.html" class="hover:text-sky-500 transition-colors nav-link">Testimonials</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li><a href="#" class="hover:text-sky-400 transition-colors">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-sky-400 transition-colors">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+                <ul class="space-y-2 text-gray-400">
+                    <li>Email: info@brainboost.com</li>
+                    <li>Phone: +1 (123) 456-7890</li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center text-gray-500 mt-8">
+            © 2024 BrainBoost. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- UI Elements ---
+            const signInBtn = document.getElementById('sign-in-btn');
+            const getStartedBtn = document.getElementById('get-started-btn');
+            const signOutBtn = document.getElementById('sign-out-btn');
+            const meritPointsContainer = document.getElementById('merit-points-container');
+            const meritPointsEl = document.getElementById('merit-points');
+            const meritContent = document.getElementById('merit-content');
+            const loginOverlayMessage = document.getElementById('login-overlay-message');
+
+            // Function to update UI based on login status
+            const updateAuthUI = (loggedIn) => {
+                if (loggedIn) {
+                    signInBtn.classList.add('hidden');
+                    getStartedBtn.classList.add('hidden');
+                    signOutBtn.classList.remove('hidden');
+                    meritPointsContainer.classList.remove('hidden');
+                } else {
+                    signInBtn.classList.remove('hidden');
+                    getStartedBtn.classList.remove('hidden');
+                    signOutBtn.classList.add('hidden');
+                    meritPointsContainer.classList.add('hidden');
+                }
+            };
+
+            // Check user status and handle page access on page load
+            const checkAuthStatus = () => {
+                const loggedIn = localStorage.getItem('loggedIn') === 'true';
+
+                if (loggedIn) {
+                    // If logged in, remove blur and hide overlay
+                    meritContent.classList.remove('content-locked');
+                    loginOverlayMessage.classList.add('hidden');
+
+                    // Update UI and merit points
+                    updateAuthUI(loggedIn);
+                    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                    if (currentUser) {
+                        const users = JSON.parse(localStorage.getItem('users')) || [];
+                        const user = users.find(u => u.email === currentUser.email);
+                        if (user && user.meritPoints !== undefined) {
+                            meritPointsEl.textContent = `${user.meritPoints} Merit`;
+                        } else {
+                            meritPointsEl.textContent = '0 Merit';
+                        }
+                    }
+                } else {
+                    // If not logged in, apply blur and show overlay
+                    meritContent.classList.add('content-locked');
+                    loginOverlayMessage.classList.remove('hidden');
+                    updateAuthUI(loggedIn);
+                }
+            };
+
+            // Event listener for the Sign Out button
+            signOutBtn.addEventListener('click', () => {
+                localStorage.removeItem('loggedIn');
+                localStorage.removeItem('currentUser');
+                localStorage.removeItem('userEmail');
+                checkAuthStatus(); // Re-run the status check to blur the content
+            });
+
+            // Initial call to check user status when the page loads
+            checkAuthStatus();
+        });
+    </script>
+</body>
+</html>
